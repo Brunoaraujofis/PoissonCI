@@ -30,15 +30,8 @@ def main():
         # Simulation of Data
         simulatedparameter = float(st.poisson.rvs(real, loc=0, size=1))
 
-        # First Calculation
-        minconfidence = float(st.poisson.ppf(1-(1+confidence)/2, mu=simulatedparameter))
-        maxconfidence = float(st.poisson.ppf(1-(1-confidence)/2, mu=simulatedparameter))
 
-        data.append([simulatedparameter,minconfidence,maxconfidence])
-        df=pd.DataFrame(data,columns=["parameter","minconfidence","maxconfidence"])
-    
-    
-    # Alternative Calculation
+        # Alternative Calculation
         step = 0.01
         param_points     = np.arange(0+step,100+step, step)
         min_value_points = [ st.poisson.ppf(1-(1+confidence)/2, mu=val) for val in param_points ]
@@ -65,16 +58,16 @@ def main():
 
 
 def UpperLimit(Measurement, ConfidenceLevel):
-    
-    return 0
+    limit = float(st.poisson.ppf( ConfidenceLevel, mu=Measurement))
+    return limit
 
 def Central(Measurement, ConfidenceLevel):
     
-    return 0
+    return 0,0
 
 def FeldmanCousins(Measurement, ConfidenceLevel):
     
-    return 0
+    return 0,0
 
 
 if __name__ == "__main__":

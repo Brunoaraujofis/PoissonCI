@@ -7,10 +7,25 @@ Created on Tue Nov 23 13:38:09 2021
 """
 
 from Models import Poisson
+import scipy.stats as st
 
-Measurement = 0
+def Coverage_Upper(mu, confidence):
+    number_of_samples = 10000
+    success = 0
+    for sample in range(number_of_samples):
+        simulated_value = float(st.poisson.rvs(mu, loc=0, size=1))
+        upper_limit = Poisson.UpperLimit(simulated_value, ConfidenceLevel)
+        if upper_limit >= mu:
+            success += 1
+    return success/number_of_samples
+        
+        
+true_value = 1000
 ConfidenceLevel = 0.95
 
-UpperLimit = Poisson.UpperLimit(Measurement, ConfidenceLevel)
-print(UpperLimit)
+print("Confidence covarage: mu = ", true_value, " confidence = ", ConfidenceLevel, " coverage = ", Coverage_Upper(true_value, ConfidenceLevel))
 
+true_value = 1
+ConfidenceLevel = 0.95
+
+print("Confidence covarage: mu = ", true_value, " confidence = ", ConfidenceLevel, " coverage = ", Coverage_Upper(true_value, ConfidenceLevel))
