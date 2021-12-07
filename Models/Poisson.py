@@ -58,7 +58,12 @@ def main():
 
 
 def UpperLimit(Measurement, ConfidenceLevel):
-    limit = float(st.poisson.ppf( ConfidenceLevel, mu=Measurement))
+    """ It return the upper limit with a 10^-2 precision  """
+    step  = 0.01  # arbitrary for now, let the user define it
+    limit = step
+    while True :
+        if st.poisson.ppf( 1-ConfidenceLevel, mu=limit) > Measurement : break
+        limit+=step
     return limit
 
 def Central(Measurement, ConfidenceLevel):

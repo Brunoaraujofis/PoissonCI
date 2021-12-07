@@ -10,7 +10,7 @@ from Models import Poisson
 import scipy.stats as st
 
 def Coverage_Upper(mu, confidence):
-    number_of_samples = 10000
+    number_of_samples = 100
     success = 0
     for sample in range(number_of_samples):
         simulated_value = float(st.poisson.rvs(mu, loc=0, size=1))
@@ -20,7 +20,7 @@ def Coverage_Upper(mu, confidence):
     return success/number_of_samples
         
         
-true_value = 1000
+true_value = 10
 ConfidenceLevel = 0.95
 
 print("Confidence covarage: mu = ", true_value, " confidence = ", ConfidenceLevel, " coverage = ", Coverage_Upper(true_value, ConfidenceLevel))
